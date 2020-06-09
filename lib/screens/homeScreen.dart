@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsappclone/screens/CallsScreen.dart';
+import 'package:whatsappclone/screens/CameraScreen.dart';
 import 'package:whatsappclone/screens/ChatScreen.dart';
 import 'package:whatsappclone/screens/StatusScreen.dart';
-import 'package:whatsappclone/constants/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'homeScreen';
@@ -11,79 +11,90 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 1);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('WaClone'),
-          actions: <Widget>[
-            IconButton(
-              tooltip: 'Search',
-              onPressed: () {
-                //implement search
-              },
-              icon: Icon(Icons.search),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('WhatsApp Clone'),
+        elevation: 0.7,
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.white,
+          tabs: [
+            Tab(
+              icon: Icon(Icons.camera_alt),
             ),
-            PopupMenuButton(
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    child: Text('New Group'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('New Broadcast'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Whatsapp Web'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Starred Messages'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Settings'),
-                  ),
-                ];
-              },
-            )
+            Tab(
+              text: 'CHATS',
+            ),
+            Tab(
+              text: 'STATUS',
+            ),
+            Tab(
+              text: 'CALLS',
+            ),
           ],
-          bottom: TabBar(
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.camera_alt),
-              ),
-              Tab(
-                child: Text(
-                  'CHATS',
-                  style: kTabTextStyle,
-                ),
-              ),
-              Tab(
-                child: Text(
-                  'STATUS',
-                  style: kTabTextStyle,
-                ),
-              ),
-              Tab(
-                child: Text(
-                  'CALLS',
-                  style: kTabTextStyle,
-                ),
-              ),
-            ],
+        ),
+        actions: <Widget>[
+          IconButton(
+            tooltip: 'Search',
+            onPressed: () {
+              //implement search
+            },
+            icon: Icon(Icons.search),
           ),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            Text('Camera'),
-            ChatScreen(),
-            StatusScreen(),
-            CallsScreen(),
-          ],
-        ),
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: Text('New Group'),
+                ),
+                PopupMenuItem(
+                  child: Text('New Broadcast'),
+                ),
+                PopupMenuItem(
+                  child: Text('Whatsapp Web'),
+                ),
+                PopupMenuItem(
+                  child: Text('Starred Messages'),
+                ),
+                PopupMenuItem(
+                  child: Text('Settings'),
+                ),
+              ];
+            },
+          )
+        ],
       ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          CameraScreen(),
+          ChatScreen(),
+          CallsScreen(),
+          StatusScreen(),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green.shade500,
+        child: Icon(
+          Icons.message,
+        ),
+        onPressed: () {
+          print('FAB pressed');
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
