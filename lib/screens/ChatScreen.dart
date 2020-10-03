@@ -10,43 +10,54 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        ChatModel model = data[index];
-        return Column(
-          children: [
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(model.avatar),
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    model.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          ChatModel model = data[index];
+          return Column(
+            children: [
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(model.avatar),
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      model.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      model.time,
+                      style: TextStyle(color: Colors.grey, fontSize: 12.0),
+                    ),
+                  ],
+                ),
+                subtitle: Container(
+                  padding: EdgeInsets.only(top: 5),
+                  child: Text(
+                    model.message,
+                    style: TextStyle(fontSize: 15),
                   ),
-                  Text(
-                    model.time,
-                    style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                  ),
-                ],
-              ),
-              subtitle: Container(
-                padding: EdgeInsets.only(top: 5),
-                child: Text(
-                  model.message,
-                  style: TextStyle(fontSize: 15),
                 ),
               ),
-            ),
-            Divider(
-              height: 10,
-            ),
-          ],
-        );
-      },
+              Divider(
+                height: 10,
+              ),
+            ],
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green.shade500,
+        child: Icon(
+          Icons.message,
+        ),
+        onPressed: () {
+          print('FAB pressed');
+        },
+      ),
     );
   }
 }

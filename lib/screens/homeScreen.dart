@@ -81,20 +81,10 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           CameraScreen(),
           ChatScreen(),
-          CallsScreen(),
           StatusScreen(),
+          CallsScreen(),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green.shade500,
-        child: Icon(
-          Icons.message,
-        ),
-        onPressed: () {
-          print('FAB pressed');
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
